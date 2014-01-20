@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">	
+
+<struts>
+	<!--struts2 develop mode -->
+	<constant name="struts.devMode" value="true"/>
+	
+	<!--when using json. must extends="json-default" in the package-->
+	<!--when using asynchronized, must set the type attribute with json in result node, 
+	and there is no data in result node -->
+	<package name="default" namespace="/json" extends="json-default">
+		<!-- dynamic method invoke(DMI)-->
+		<action name="input_user" class="com.joe.jquery.action.UserAction">
+			<result name="INPUT_USER">/ajax_json_input_user.jsp</result>
+			<result name="hel" type="json"></result>
+		</action>  
+
+		<!--when not DMI-->
+		<action name="userInfo" class="com.joe.jquery.action.UserAction" method="loadUserInfo">
+			<result name="userInfo" type="json"></result>
+		</action>
+
+		<action name="userInfoList" class="com.joe.jquery.action.UserAction" method="loadUserInfoList">
+			<result name="userInfoList" type="json"></result>
+		</action>
+
+		<action name="add_user" class="com.joe.jquery.action.UserAction" method="addUser">
+			<result name="ADD_SUCCESS" type="json"></result>
+		</action>
+
+		<action name="load_allUser" class="com.joe.jquery.action.UserAction" method="loadAllUser">
+			<result name="USER" type="json"></result>
+		</action>
+		
+		<!--when not using the asynchronized method to display users-->
+		<action name="load_allUser_jump" class="com.joe.jquery.action.UserAction" method="loadAllUser">
+			<result name="USER">/ajax_json_user_result.jsp</result>
+		</action>
+		
+		<action name="chainSelectAction" class="com.joe.jquery.action.ChainSelectAction" method="chainSelected">
+			<result name="SUCCESS" type="json"></result>
+		</action>
+	</package>
+	
+	<package name="default2" namespace="/xmlType" extends="struts-default">
+		<action name="userXmlAction" class="com.joe.jquery.action.UserXmlAction" method="execute">
+			<result name="success">/ajax_xml_input_user.jsp</result>
+		</action>
+	</package>
+</struts>
